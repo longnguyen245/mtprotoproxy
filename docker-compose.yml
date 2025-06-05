@@ -1,16 +1,18 @@
-version: '2.0'
+version: '3.8'
+
 services:
   mtprotoproxy:
     build: .
     restart: unless-stopped
-    network_mode: "host"
+    network_mode: host
     volumes:
-        - ./config.py:/home/tgproxy/config.py
-        - ./mtprotoproxy.py:/home/tgproxy/mtprotoproxy.py
-        - /etc/localtime:/etc/localtime:ro
+      - ./config.py:/home/tgproxy/config.py
+      - ./mtprotoproxy.py:/home/tgproxy/mtprotoproxy.py
+      - /etc/localtime:/etc/localtime:ro
     logging:
-        driver: "json-file"
-        options:
-            max-file: "10"
-            max-size: "10m"
-#    mem_limit: 1024m
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
+    mem_limit: 512m  # có thể bật lại nếu muốn
+    user: root  # ⚠️ cần thiết nếu gặp lỗi "operation not permitted"
